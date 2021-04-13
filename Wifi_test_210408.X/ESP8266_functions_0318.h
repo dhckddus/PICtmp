@@ -954,7 +954,7 @@ unsigned char *esp8266_current_time()
     _esp8266_print("AT*CIPSNTPFG?\r\n");
 }
 
-unsigned const char* esp8266_getAPI()
+unsigned char* esp8266_getAPI()         //반환값 받는 부분이 상수가 아니므로 굳이 상수일 필요는 없음
 {
     _esp8266_print("AT+CIPMUX=0\r\n"); // 단일 연결
     _esp8266_waitFor("OK");
@@ -963,8 +963,8 @@ unsigned const char* esp8266_getAPI()
     _esp8266_print("AT+CIPSEND=20\r\n"); // 데이터 보내기, 데이터길이 2048 byte
     _esp8266_waitFor("OK");
     _esp8266_print("GET /wid/queryDFSRSS.jsp?zone=4119083000 HTTP/1.1\r\n"); // 데이터 보내기, 데이터길이 2048 byte
-    unsigned char data[];
-    unsigned char* api = data;
+    static unsigned char data[20];      //static -> 지역변수는 함수를 빠져나가면 값이 사라질 우려가 있음, 정적변수로 값 보호
+    //unsigned char* api = data;        //쓰지 않는 변수로 인한 memory lack 방지
     unsigned int i=0;
     while(i!=16)
     {

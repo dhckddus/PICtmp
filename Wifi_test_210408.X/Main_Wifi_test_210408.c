@@ -215,7 +215,7 @@ void ESP8266_check_Mode()
 
 void main(void) {
     TRISD = 0x00;
-    unsigned char test1 ="\0";
+    unsigned char* test1;           //포인터 char에 string타입을 넣을 수 없음
     int apiapi1 = 0;
     Lcd_Start();
     Initialize_ESP8266() ;
